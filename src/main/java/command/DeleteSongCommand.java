@@ -9,15 +9,15 @@ import java.sql.SQLException;
 import model.Song;
 import connectionprovider.ConnectionProvider;
 
-public class GetSongCommand {
-
+public class DeleteSongCommand 
+{
 	public Song execute(int id) {
 		Song s = new Song();
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 			 //Statement stmt = connection.createStatement();
 			PreparedStatement stmt = connection
-					.prepareStatement("SELECT * FROM Songs WHERE id = ?");
+					.prepareStatement("DELETE FROM Songs WHERE id = ?");
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -32,5 +32,4 @@ public class GetSongCommand {
 		}
 		return s;
 	}
-
 }

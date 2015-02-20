@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -17,6 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.Song;
 import command.CreateSongCommand;
+import command.DeleteSongCommand;
+import command.GetSongArtCommand;
 import command.GetSongCommand;
 import command.ListSongsCommand;
 import command.UpdateSongCommand;
@@ -88,24 +91,68 @@ public class Services {
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Consumes({ MediaType.APPLICATION_JSON })
-	public Response updateSongs(String payload, @PathParam("id") int id) {
+	public Response updateSongs(String payload, @PathParam("id") int id) 
+	{
 		UpdateSongCommand update = new UpdateSongCommand();
 		Song s = null;
-		try {
+		try 
+		{
 			s = mapper.readValue(payload, Song.class);
 			s.setId(id);
-		} catch (Exception ex) {
+		} 
+		catch (Exception ex) 
+		{
 			ex.printStackTrace();
 			Response.status(400).entity("could not read string").build();
 		}
-		try {
+		try 
+		{
 			update.execute(s);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 			Response.status(500).build();
 		}
 		return Response.status(200).build();
 	}
-	// Delete a song
+	// Delete a songs
 	// Search songs
+	@GET
+	@Path("artists/{artist}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getSong(@PathParam("artist") String artist) 
+	{
+		GetSongArtCommand command = new GetSongArtCommand();
+		String songString = null;
+		try 
+		{
+			songString = mapper.writeValueAsString(command.execute(artist));
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(songString).build();
+	}
+	// Delete a songs
+	@DELETE
+	@Path("{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Consumes({ MediaType.APPLICATION_JSON })
+	public Response getSong2(@PathParam("id") int id) 
+	{
+		DeleteSongCommand command = new DeleteSongCommand();
+		String songString = null;
+		try 
+		{
+			command.execute(id);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		return Response.status(200).entity(songString).build();
+	}
+	
 }

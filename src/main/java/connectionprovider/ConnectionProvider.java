@@ -29,18 +29,25 @@ public class ConnectionProvider {
 		return DriverManager.getConnection(dbUrl, username, password);
 	}
 
-	public static void main(String[] args) {
-		try {
+	public static void main(String[] args) 
+	{
+		try
+		{
 			Connection connection = getConnection();
 			Statement stmt = connection.createStatement();
-			stmt.executeUpdate("INSERT INTO GOODS(THING) VALUES('My cool Item');");
-			ResultSet rs = stmt.executeQuery("SELECT Thing FROM Goods");
-			while (rs.next()) {
-				System.out.println("Thing: " + rs.getString("thing"));
+			//stmt.executeUpdate("INSERT INTO GOODS(THING) VALUES('My cool Item');");
+			ResultSet rs = stmt.executeQuery("SELECT artist FROM songs");
+			
+			while (rs.next()) 
+			{
+				System.out.println("Artist: " + rs.getString("artist"));
 			}
-		} catch (URISyntaxException e) {
+		}
+		catch (URISyntaxException e)
+		{
 			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (SQLException e) 
+		{
 			e.printStackTrace();
 		}
 	}

@@ -9,16 +9,16 @@ import java.sql.SQLException;
 import model.Song;
 import connectionprovider.ConnectionProvider;
 
-public class GetSongCommand {
-
-	public Song execute(int id) {
+public class GetSongArtCommand 
+{
+	public Song execute(String artist) {
 		Song s = new Song();
 		try {
 			Connection connection = ConnectionProvider.getConnection();
 			 //Statement stmt = connection.createStatement();
 			PreparedStatement stmt = connection
-					.prepareStatement("SELECT * FROM Songs WHERE id = ?");
-			stmt.setInt(1, id);
+					.prepareStatement("SELECT * FROM Songs WHERE artist = ?");
+			stmt.setString(1, artist);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				s.setArtist(rs.getString("artist"));

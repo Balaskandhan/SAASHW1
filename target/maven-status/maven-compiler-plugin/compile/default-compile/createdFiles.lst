@@ -3,6 +3,7 @@ connectionprovider\ConnectionProvider.class
 util\Constants.class
 util\Constants$Pagination.class
 command\ListSongsCommand.class
+command\GetSongArtCommand.class
 services\Services.class
 command\CreateSongCommand.class
 command\UpdateSongCommand.class
